@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.mall.dao.ProductDao">
+    <select id="getProduct" parameterType="long" resultType="com.springboot.mall.pojo.Product">
+        select id, product_name as productName, stock, price, version, note from product
+        where id = #{id}
+    </select>
+
+    <!-- Pessimistic Lock -->
+    <!--    <select id="getProduct" parameterType="long" resultType="com.springboot.mall.pojo.Product">-->
+    <!--        select id, product_name as productName, stock, price, version, note from product-->
+    <!--        where id = #{id} for update-->
+    <!--    </select>-->
+
+    <!-- Optimistic Lock -->
+    <update id="decreaseProduct">
+        update product
+        set stock   = stock - #{quantity},
+            version = version + 1
+        where id = #{id}
+          and version = #{version}
+    </update>
+
+    <update id="decreaseProductWithoutVersion">
+        update product set stock = stock - #{quantity}
+        where id = #{id}
+    </update>
+</mapper>
