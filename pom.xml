@@ -10,7 +10,8 @@
 
     <modules>
         <module>mall</module>
-        <module>manager</module>
+        <module>eureka</module>
+        <module>user</module>
     </modules>
 
 </project>
