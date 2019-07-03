@@ -10,6 +10,7 @@
 
     <modules>
         <module>mall</module>
+        <module>manager</module>
     </modules>
 
 </project>
