@@ -22,4 +22,6 @@ public class UserController {
                 + serviceInstance.getHost() + ":" + serviceInstance.getPort());
         return User.builder().id(id).level(1).userName("username_" + id).note("note_" + id).build();
     }
+
+
 }
