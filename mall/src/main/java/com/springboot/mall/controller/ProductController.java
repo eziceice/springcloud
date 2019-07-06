@@ -1,11 +1,11 @@
 package com.springboot.mall.controller;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.springboot.mall.pojo.User;
 import com.springboot.mall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
@@ -34,5 +34,34 @@ public class ProductController {
             user = userService.getUser((long) i);
         }
         return user;
+    }
+
+    @PostMapping("/feign2")
+    public User testFeignPost() {
+        User user = null;
+        for (int i = 0; i < 10; i++) {
+            user = userService.insertUser(new User());
+        }
+        return user;
+    }
+
+    @PutMapping("/feign3")
+    public User testFeignPut() {
+        User user = null;
+        for (int i = 0; i < 10; i++) {
+            user = userService.updateUser(new User());
+        }
+        return user;
+    }
+
+    @GetMapping("/hystrix")
+    @HystrixCommand(fallbackMethod = "error", commandProperties =
+            {@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")})
+    public String circuitBreaker() {
+        return userService.timeout();
+    }
+
+    public String error() {
+        return "Timeout!";
     }
 }
