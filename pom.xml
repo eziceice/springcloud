@@ -12,6 +12,8 @@
         <module>mall</module>
         <module>eureka</module>
         <module>user</module>
+        <module>hystrix</module>
+        <module>zuul</module>
     </modules>
 
 </project>
