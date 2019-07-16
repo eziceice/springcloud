@@ -1,10 +1,12 @@
 package com.springboot.mall.service;
 
+import com.springboot.mall.config.FeignConfig;
 import com.springboot.mall.pojo.User;
+import com.springboot.mall.service.hystrix.UserServiceHystrix;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient("user")
+@FeignClient(value = "user", configuration = FeignConfig.class, fallback = UserServiceHystrix.class)
 public interface UserService {
 
     @GetMapping("/users/{id}")

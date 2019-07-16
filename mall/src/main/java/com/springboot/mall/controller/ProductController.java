@@ -24,6 +24,7 @@ public class ProductController {
     private UserService userService;
 
     @GetMapping("/ribbon")
+    @HystrixCommand(fallbackMethod = "error")
     public User testRibbon() {
         User user = null;
         for (int i = 0; i < 10; i++) {
