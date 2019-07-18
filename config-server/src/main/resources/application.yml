@@ -1,0 +1,24 @@
+spring:
+  cloud:
+    config:
+      server:
+        #        从本地读取Config
+        #        native:
+        #          search-locations: classpath:/shared
+        git:
+          uri: https://github.com/eziceice/springboot
+          search-paths: config
+          username: liyutian6@gmail.com
+          password:
+      label: master
+  #  从本地读取Config
+  #  profiles:
+  #    active: native
+  application:
+    name: config-server
+server:
+  port: 8770
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka/
